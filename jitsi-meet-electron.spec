@@ -1,4 +1,5 @@
 %global debug_package %{nil}
+%global _build_id_links %{nil}
 AutoReqProv: no
 %global __os_install_post /usr/lib/rpm/brp-compress %{nil}
 
