@@ -5,7 +5,7 @@ AutoReqProv: no
 %global __os_install_post /usr/lib/rpm/brp-compress %{nil}
 
 Name:		jitsi-meet-electron
-Version:	2.8.7
+Version:	2.8.8
 Release:	1%{dist}
 Summary:	Open Source Video Calls And Chat
 Group:		Applications/Communications
@@ -23,6 +23,7 @@ BuildRequires:	libpng-devel
 BuildRequires:	gcc-c++ 
 BuildRequires:	libXtst-devel
 BuildRequires:	libxcrypt-compat
+BuildRequires:	/usr/bin/python3
 Provides:	jitsi >= 2.11.5633
 
 
@@ -34,7 +35,7 @@ Desktop application for Jitsi Meet built with Electron.
 %setup -n jitsi-meet-electron-%{version} 
 
 %build
-#npm config set registry http://registry.npmjs.org/ 
+npm config set registry http://registry.npmjs.org/ 
 npm install node-gyp
 npm install nodejs-webpack
 npm install electron-builder
@@ -69,6 +70,9 @@ install -Dm 0644 %{S:3} %{buildroot}/%{_metainfodir}/org.jitsi-meet-electron.met
 
 
 %changelog
+
+* Sun Jul 04 2021 David Va <davidva AT tuta DOT io> 2.8.8-1
+- Updated to  2.8.8
 
 * Thu Jul 01 2021 David Va <davidva AT tuta DOT io> 2.8.7-1
 - Updated to  2.8.7
