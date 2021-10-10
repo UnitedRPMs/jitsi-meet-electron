@@ -5,8 +5,8 @@ AutoReqProv: no
 %global __os_install_post /usr/lib/rpm/brp-compress %{nil}
 
 Name:		jitsi-meet-electron
-Version:	2.8.11
-Release:	1%{dist}
+Version:	2.9.0
+Release:	1%{?dist}
 Summary:	Open Source Video Calls And Chat
 Group:		Applications/Communications
 License:	LGPLv2+
@@ -71,6 +71,9 @@ install -Dm 0644 %{S:3} %{buildroot}/%{_metainfodir}/org.jitsi-meet-electron.met
 
 
 %changelog
+* Sun Oct 10 2021 Sérgio Basto <sergio@serjux.com> - 2.9.0-1
+- Update jitsi-meet-electron to 2.9.0
+
 
 * Mon Aug 30 2021 David Va <davidva AT tuta DOT io> 2.8.11-1
 - Updated to  2.8.11
