@@ -6,7 +6,7 @@ AutoReqProv: no
 
 %global nodjs_ver 14.18.0
 
-%if 0%{?fedora} >= 34
+%if 0%{?fedora} >= 32
 %define npm_ export PATH=%{_topdir}/node-v%{nodjs_ver}-linux-x64/bin/:$PATH && %{_topdir}/node-v%{nodjs_ver}-linux-x64/bin/npm
 %else 
 %global npm_ /usr/bin/npm
@@ -27,7 +27,7 @@ Source4:	https://nodejs.org/dist/v14.18.0/node-v%nodjs_ver-linux-x64.tar.xz
 BuildRequires:	git wget make
 BuildRequires:	libX11-devel
 BuildRequires:	electron
-%if 0%{?fedora} <= 33
+%if 0%{?fedora} <= 32
 BuildRequires:	nodejs-devel npm
 %endif
 BuildRequires:	libpng-devel
@@ -45,7 +45,7 @@ Desktop application for Jitsi Meet built with Electron.
 %prep
 %setup -n jitsi-meet-electron-%{version} -a4
 
-%if 0%{?fedora} >= 34
+%if 0%{?fedora} >= 32
 mv -f node-v%{nodjs_ver}-linux-x64 %{_topdir}/
 %endif
 
