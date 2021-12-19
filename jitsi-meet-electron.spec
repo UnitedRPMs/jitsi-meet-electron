@@ -4,16 +4,18 @@
 AutoReqProv: no
 %global __os_install_post /usr/lib/rpm/brp-compress %{nil}
 
-%global nodjs_ver 14.18.0
+%global nodjs_ver 14.18.2
 
-%if 0%{?fedora} >= 32
+%if 0%{?fedora} >= 35
+%bcond_with  system_node
 %define npm_ export PATH=%{_topdir}/node-v%{nodjs_ver}-linux-x64/bin/:$PATH && %{_topdir}/node-v%{nodjs_ver}-linux-x64/bin/npm
-%else 
+%else
+%bcond_without  system_node
 %global npm_ /usr/bin/npm
 %endif
 
 Name:		jitsi-meet-electron
-Version:	2.9.0
+Version:	2021.12.2
 Release:	1%{?dist}
 Summary:	Open Source Video Calls And Chat
 Group:		Applications/Communications
@@ -22,13 +24,16 @@ URL:		https://jitsi.org/
 Source0:	https://github.com/jitsi/jitsi-meet-electron/archive/refs/tags/v%{version}.tar.gz
 Source2:	jitsi-meet-electron.desktop
 Source3:	org.jitsi-meet-electron.metainfo.xml
-Source4:	https://nodejs.org/dist/v14.18.0/node-v%nodjs_ver-linux-x64.tar.xz
+%if !%{with system_node}
+Source4:	https://nodejs.org/dist/v%{nodjs_ver}/node-v%{nodjs_ver}-linux-x64.tar.xz
+%endif
 
 BuildRequires:	git wget make
 BuildRequires:	libX11-devel
-BuildRequires:	electron
-%if 0%{?fedora} <= 32
+%if %{with system_node}
 BuildRequires:	nodejs-devel npm
+%else
+BuildRequires:	electron
 %endif
 BuildRequires:	libpng-devel
 BuildRequires:	gcc-c++ 
@@ -43,15 +48,18 @@ Desktop application for Jitsi Meet built with Electron.
 
 
 %prep
+%if %{with system_node}
+%setup -qn jitsi-meet-electron-%{version}
+%else
 %setup -n jitsi-meet-electron-%{version} -a4
 
-%if 0%{?fedora} >= 32
 mv -f node-v%{nodjs_ver}-linux-x64 %{_topdir}/
 %endif
 
 %build
+rm package-lock.json
 %npm_ config set registry https://registry.npmjs.org/ 
-%npm_ cache clean --force
+#npm  cache clean --force
 %npm_ install node-gyp
 %npm_  install nodejs-webpack
 %npm_  install electron-builder
@@ -86,6 +94,9 @@ install -Dm 0644 %{S:3} %{buildroot}/%{_metainfodir}/org.jitsi-meet-electron.met
 
 
 %changelog
+* Sun Dec 19 2021 Sérgio Basto <sergio@serjux.com> - 2021.12.2-1
+- Update to 2021.12.2
+
 * Sun Oct 10 2021 Sérgio Basto <sergio@serjux.com> - 2.9.0-1
 - Update jitsi-meet-electron to 2.9.0
 
