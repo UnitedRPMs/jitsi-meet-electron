@@ -15,7 +15,7 @@ AutoReqProv: no
 %endif
 
 Name:		jitsi-meet-electron
-Version:	2021.12.2
+Version:	2022.1.1
 Release:	1%{?dist}
 Summary:	Open Source Video Calls And Chat
 Group:		Applications/Communications
@@ -94,6 +94,10 @@ install -Dm 0644 %{S:3} %{buildroot}/%{_metainfodir}/org.jitsi-meet-electron.met
 
 
 %changelog
+
+* Wed Mar 02 2022 David Va <davidva AT tuta DOT io> 2022.1.1-1
+- Updated to 2022.1.1
+
 * Sun Dec 19 2021 Sérgio Basto <sergio@serjux.com> - 2021.12.2-1
 - Update to 2021.12.2
 
