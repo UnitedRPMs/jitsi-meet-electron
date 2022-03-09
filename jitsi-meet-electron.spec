@@ -15,7 +15,7 @@ AutoReqProv: no
 %endif
 
 Name:		jitsi-meet-electron
-Version:	2022.1.1
+Version:	2022.2.1
 Release:	1%{?dist}
 Summary:	Open Source Video Calls And Chat
 Group:		Applications/Communications
@@ -75,7 +75,7 @@ rm package-lock.json
     cp -aT -- ./dist/linux-unpacked %{buildroot}/%{_datadir}/jitsi-meet-electron
 
     mkdir -p -- %{buildroot}/usr/bin
-    ln -s -- '../share/jitsi-meet-electron/jitsi-meet.bin' %{buildroot}/%{_bindir}/jitsi-meet-electron
+    ln -s -- '../share/jitsi-meet-electron/jitsi-meet' %{buildroot}/%{_bindir}/jitsi-meet-electron
 
     install -Dm644 -- resources/icon.png "%{buildroot}/%{_datadir}/pixmaps/%{name}.png"
 
@@ -94,6 +94,9 @@ install -Dm 0644 %{S:3} %{buildroot}/%{_metainfodir}/org.jitsi-meet-electron.met
 
 
 %changelog
+
+* Mon Mar 07 2022 David Va <davidva AT tuta DOT io> 2022.2.1-1
+- Updated to 2022.2.1
 
 * Wed Mar 02 2022 David Va <davidva AT tuta DOT io> 2022.1.1-1
 - Updated to 2022.1.1
