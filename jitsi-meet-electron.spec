@@ -15,13 +15,13 @@ AutoReqProv: no
 %endif
 
 Name:		jitsi-meet-electron
-Version:	2022.2.1
+Version:	2022.3.1
 Release:	1%{?dist}
 Summary:	Open Source Video Calls And Chat
 Group:		Applications/Communications
 License:	LGPLv2+
 URL:		https://jitsi.org/
-Source0:	https://github.com/jitsi/jitsi-meet-electron/archive/refs/tags/v%{version}.tar.gz
+Source0:	https://github.com/jitsi/jitsi-meet-electron/archive/refs/tags/v%{version}/%{name}-%{version}.tar.gz
 Source2:	jitsi-meet-electron.desktop
 Source3:	org.jitsi-meet-electron.metainfo.xml
 %if !%{with system_node}
@@ -36,7 +36,7 @@ BuildRequires:	nodejs-devel npm
 BuildRequires:	electron
 %endif
 BuildRequires:	libpng-devel
-BuildRequires:	gcc-c++ 
+BuildRequires:	gcc-c++
 BuildRequires:	libXtst-devel
 BuildRequires:	libxcrypt-compat
 BuildRequires:	/usr/bin/python3
@@ -51,21 +51,19 @@ Desktop application for Jitsi Meet built with Electron.
 %if %{with system_node}
 %setup -qn jitsi-meet-electron-%{version}
 %else
-%setup -n jitsi-meet-electron-%{version} -a4
+%setup -qn jitsi-meet-electron-%{version} -a4
 
 mv -f node-v%{nodjs_ver}-linux-x64 %{_topdir}/
 %endif
 
 %build
 rm package-lock.json
-%npm_ config set registry https://registry.npmjs.org/ 
+%npm_ config set registry https://registry.npmjs.org/
 #npm  cache clean --force
-%npm_ install node-gyp
-%npm_  install nodejs-webpack
-%npm_  install electron-builder
 %npm_  install
-#npm_  audit fix 
-%npm_  run dist
+#npm_  audit fix
+%npm_  run build
+./node_modules/.bin/electron-builder --linux tar.xz
 
 %install
     mkdir -p -- %{buildroot}/%{_datadir}/applications
@@ -94,6 +92,9 @@ install -Dm 0644 %{S:3} %{buildroot}/%{_metainfodir}/org.jitsi-meet-electron.met
 
 
 %changelog
+* Sun Mar 27 2022 Sérgio Basto <sergio@serjux.com> - 2022.3.1-1
+- Update to 2022.3.1
+
 
 * Mon Mar 07 2022 David Va <davidva AT tuta DOT io> 2022.2.1-1
 - Updated to 2022.2.1
