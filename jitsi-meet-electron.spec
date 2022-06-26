@@ -6,7 +6,7 @@ AutoReqProv: no
 
 %global nodjs_ver 14.18.2
 
-%if 0%{?fedora} >= 35
+%if 0%{?fedora} >= 36
 %bcond_with  system_node
 %define npm_ export PATH=%{_topdir}/node-v%{nodjs_ver}-linux-x64/bin/:$PATH && %{_topdir}/node-v%{nodjs_ver}-linux-x64/bin/npm
 %else
@@ -15,7 +15,7 @@ AutoReqProv: no
 %endif
 
 Name:		jitsi-meet-electron
-Version:	2022.3.1
+Version:	2022.4.1
 Release:	1%{?dist}
 Summary:	Open Source Video Calls And Chat
 Group:		Applications/Communications
@@ -92,6 +92,9 @@ install -Dm 0644 %{S:3} %{buildroot}/%{_metainfodir}/org.jitsi-meet-electron.met
 
 
 %changelog
+* Sat Jun 25 2022 Sérgio Basto <sergio@serjux.com> - 2022.4.1-1
+- 2022.4.1
+
 * Sun Mar 27 2022 Sérgio Basto <sergio@serjux.com> - 2022.3.1-1
 - Update to 2022.3.1
 
